@@ -1,0 +1,6 @@
+Makefile
+bin/
+obj/
+*.make
+lib/bin/
+lib/obj/

@@ -1,0 +1,996 @@
+{
+    "file format identifier": 1.2,
+    "description": "dessert scene",
+    "author": "Copyright (c) 2023 Engine Development Team",
+    "fastgltf files":
+    [
+        {
+            "filename": "application/lucre/models/external_3D_files/cactus/cactus.glb",
+            "instances":
+            [
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.2, 0.2, 0.2
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            6.5, 1.69203, -0.893857
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.2, 0.2, 0.2
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            5.61286, 1.76082, -2.96429
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.2, 0.2, 0.2
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            2.85041, 1.76756, -5.13747
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.128, 0.128, 0.128
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            5.21368, 1.7987, -6.71775
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.09198, 0.136353, 0.09198
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            8.06522, 4.68587, -20.2749
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.2, 0.2, 0.2
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            7.64496, 4.70813, -20.4337
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.310321, 0.116303, 0.2
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            7.38913, 4.69432, -20.4309
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.206, 0.206, 0.206
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            -17.4879, 2.7787, -6.79469
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.132, 0.132, 0.132
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            3.82579, 2.18579, -13.0246
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.0760539, 0.2, 0.138714
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            -0.912868, 1.76793, -3.66714
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "filename": "application/lucre/models/external_3D_files/lightBulb/lightBulb.gltf",
+            "instances":
+            [
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.00999981, 0.00999996, 0.01
+                        ],
+                        "rotation":
+                        [
+                            -0.872664, -0.523599, 0.174533
+                        ],
+                        "translation":
+                        [
+                            4.2849, 7.73622, -0.709274
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "filename": "application/lucre/models/external_3D_files/lightBulb/lightBulb2.gltf",
+            "instances":
+            [
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.00999932, 0.00999996, 0.00999989
+                        ],
+                        "rotation":
+                        [
+                            -0.872665, -0.523599, 0.174533
+                        ],
+                        "translation":
+                        [
+                            6.35849, 6.32772, -13.9426
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "filename": "application/lucre/models/external_3D_files/node hierarchy/gltf/node hierarchy.glb",
+            "instances":
+            [
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            1.097, 1.4, 2.4
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            2, 1.4, 2.4
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 0, 0
+                        ],
+                        "translation":
+                        [
+                            3, 1.4, 2.4
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 0, 0
+                        ],
+                        "translation":
+                        [
+                            4, 1.4, 2.4
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 0, 0
+                        ],
+                        "translation":
+                        [
+                            5, 1.4, 2.4
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 0, 0
+                        ],
+                        "translation":
+                        [
+                            0, 1.4, 2.4
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 0, 0
+                        ],
+                        "translation":
+                        [
+                            -1.097, 1.4, 2.4
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            -2, 1.4, 2.4
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 0, 0
+                        ],
+                        "translation":
+                        [
+                            -3, 1.4, 2.4
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 0, 0
+                        ],
+                        "translation":
+                        [
+                            -4, 1.4, 2.4
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 0, 0
+                        ],
+                        "translation":
+                        [
+                            -5, 1.4, 2.4
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 0, 0
+                        ],
+                        "translation":
+                        [
+                            1.097, 1.4, 3.956
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            2, 1.4, 3.95634
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 0, 0
+                        ],
+                        "translation":
+                        [
+                            3, 1.4, 3.956
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 0, 0
+                        ],
+                        "translation":
+                        [
+                            4, 1.4, 3.956
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 0, 0
+                        ],
+                        "translation":
+                        [
+                            5, 1.4, 3.956
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 0, 0
+                        ],
+                        "translation":
+                        [
+                            0, 1.4, 3.956
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 0, 0
+                        ],
+                        "translation":
+                        [
+                            -1.097, 1.4, 3.956
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            -2, 1.4, 3.95634
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 0, 0
+                        ],
+                        "translation":
+                        [
+                            -3, 1.4, 3.956
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 0, 0
+                        ],
+                        "translation":
+                        [
+                            -4, 1.4, 3.956
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 0, 0
+                        ],
+                        "translation":
+                        [
+                            -5, 1.4, 3.956
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            1.097, 1.444, 0.2
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            2, 1.444, 0.2
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            3, 1.444, 0.2
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            4, 1.444, 0.2
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            5, 1.444, 0.2
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            0, 1.444, 0.2
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            -1.097, 1.444, 0.2
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            -2, 1.444, 0.2
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 0, 0
+                        ],
+                        "translation":
+                        [
+                            -3, 1.444, 0.2
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 0, 0
+                        ],
+                        "translation":
+                        [
+                            -4, 1.444, 0.2
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 0, 0
+                        ],
+                        "translation":
+                        [
+                            -5, 1.444, 0.2
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "filename": "application/lucre/models/external_3D_files/node hierarchy/asphalt/gltf/asphalt.gltf",
+            "instances":
+            [
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 1.57045, 0
+                        ],
+                        "translation":
+                        [
+                            1.09699, 1.659, 0.972513
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 1.57045, 0
+                        ],
+                        "translation":
+                        [
+                            -43.95, 1.659, 0.954105
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.486
+                        ],
+                        "rotation":
+                        [
+                            0, 1.57045, 0
+                        ],
+                        "translation":
+                        [
+                            -93.7106, 1.659, 0.952462
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4
+                        ],
+                        "rotation":
+                        [
+                            0, 1.57045, 0
+                        ],
+                        "translation":
+                        [
+                            46.1, 1.659, 0.956
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.4, 0.4, 0.4655
+                        ],
+                        "rotation":
+                        [
+                            0, 1.57045, 0
+                        ],
+                        "translation":
+                        [
+                            93.8936, 1.659, 0.956965
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "filename": "application/lucre/models/external_3D_files/node hierarchy/sand/gltf/sand.glb",
+            "instances":
+            [
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            1, 0.5, 1
+                        ],
+                        "rotation":
+                        [
+                            0, 1.57045, 0
+                        ],
+                        "translation":
+                        [
+                            0, -0.715, 42.36
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            1, 0.5, 1
+                        ],
+                        "rotation":
+                        [
+                            1.57081, -1.50099, -1.5708
+                        ],
+                        "translation":
+                        [
+                            0, 2.1, -40.4
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            -1, -0.5, -1
+                        ],
+                        "rotation":
+                        [
+                            -2.05799e-11, -1.57045, -3.14159
+                        ],
+                        "translation":
+                        [
+                            80, -0.715, 42.36
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            -1, -0.5, -1
+                        ],
+                        "rotation":
+                        [
+                            -1.57081, 1.50099, 1.57079
+                        ],
+                        "translation":
+                        [
+                            80, 2.1, -40.4
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            -1, -0.5, -1
+                        ],
+                        "rotation":
+                        [
+                            -2.05799e-11, -1.57045, -3.14159
+                        ],
+                        "translation":
+                        [
+                            -80, -0.715, 42.36
+                        ]
+                    }
+                },
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            -1, -0.5, -1
+                        ],
+                        "rotation":
+                        [
+                            -1.57081, 1.50099, 1.57079
+                        ],
+                        "translation":
+                        [
+                            -80, 2.1, -40.4
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

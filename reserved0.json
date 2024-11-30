@@ -1,0 +1,103 @@
+{
+    "file format identifier": 1.2,
+    "description": "reserved0 scene",
+    "author": "Copyright (c) 2024 Engine Development Team",
+    "terrain":
+    [
+        {
+            "filename": "application/lucre/terrainDescriptions/heightmap2.json",
+            "instances":
+            [
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.0054, 0.115714, 0.0054
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            -0.576, 2.29826, -0.117
+                        ]
+                    }
+                }
+            ]
+        }
+    ],
+    "fastgltf files":
+    [
+        {
+            "filename": "application/lucre/models/assets/Sponza/glTF/Sponza.gltf",
+            "instances":
+            [
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            1, 1, 1
+                        ],
+                        "rotation":
+                        [
+                            0, -0, 0
+                        ],
+                        "translation":
+                        [
+                            0.229, -0.009, 0.11638
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "filename": "application/lucre/models/external_3D_files/lightBulb/lightBulb.gltf",
+            "instances":
+            [
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.038, 0.038, 0.038
+                        ],
+                        "rotation":
+                        [
+                            -0.698132, -0.698132, 0.174533
+                        ],
+                        "translation":
+                        [
+                            2.27413, 5.61954, -3.7331
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "filename": "application/lucre/models/external_3D_files/lightBulb/lightBulb2.gltf",
+            "instances":
+            [
+                {
+                    "transform":
+                    {
+                        "scale":
+                        [
+                            0.00999934, 0.00999997, 0.00999993
+                        ],
+                        "rotation":
+                        [
+                            -1.11028, -0.546991, 0.165967
+                        ],
+                        "translation":
+                        [
+                            6, 6.26463, -14.1572
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

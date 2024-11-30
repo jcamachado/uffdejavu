@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/pointLight.vert</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/pointLight.frag</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/spriteRenderer.vert</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/spriteRenderer.frag</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/pbr.vert</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/pbr.frag</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/pbrSA.vert</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/deferredShading.vert</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/deferredShading.frag</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/spriteRenderer2D.vert</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/spriteRenderer2D.frag</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/guiShader2.vert</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/guiShader2.frag</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/guiShader.vert</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/guiShader.frag</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/skybox.vert</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/skybox.frag</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/shadowShaderInstanced.vert</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/shadowShaderInstanced.frag</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/shadowShaderAnimatedInstanced.vert</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/shadowShaderAnimatedInstanced.frag</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/debug.vert</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>../engine/platform/Vulkan/shaders/debug.frag</file>
+    </gresource>
+    <gresource prefix="/images/">
+        <file>images/cursor.png</file>
+    </gresource>
+    <gresource prefix="/images/">
+        <file>images/cursorEmpty.png</file>
+    </gresource>
+    <gresource prefix="/images/">
+        <file>images/I_Vulkan.png</file>
+    </gresource>
+    <gresource prefix="/images/">
+        <file>atlas/atlas.png</file>
+    </gresource>
+    <gresource prefix="/images/">
+        <file>atlas/fontAtlas.png</file>
+    </gresource>
+    <gresource prefix="/text/">
+        <file>sdl/gamecontrollerdb.txt</file>
+    </gresource>
+    <gresource prefix="/sounds/">
+        <file>waves.ogg</file>
+    </gresource>
+    <gresource prefix="/sounds/">
+        <file>buckle.ogg</file>
+    </gresource>
+</gresources>
