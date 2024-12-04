@@ -1,0 +1,4 @@
+0000000000000000000000000000000000000000 c008702d1c062c11950038201e67a0ff3f658a58 jaxe <jcamachado@id.uff.br> 1716593639 -0300	clone: from https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR.git
+c008702d1c062c11950038201e67a0ff3f658a58 ab14efb76e58ada658e963a3393a0baecd40e070 jaxe <jcamachado@id.uff.br> 1716757254 -0300	checkout: moving from master to ab14efb76e58ada658e963a3393a0baecd40e070
+ab14efb76e58ada658e963a3393a0baecd40e070 ab14efb76e58ada658e963a3393a0baecd40e070 jaxe <jcamachado@id.uff.br> 1716757269 -0300	checkout: moving from ab14efb76e58ada658e963a3393a0baecd40e070 to bbb
+ab14efb76e58ada658e963a3393a0baecd40e070 c008702d1c062c11950038201e67a0ff3f658a58 jaxe <jcamachado@id.uff.br> 1716757871 -0300	checkout: moving from bbb to master

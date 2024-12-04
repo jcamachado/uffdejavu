@@ -1,8 +1,0 @@
-License CC-BY-SA 3.0
-
-asset-demo-bundle-3.0-cube-diorama
-
-https://www.blender.org/download/demo-files/
-
-Changes made to the original demo from Blender:
-assets placed, materials baked into textures
