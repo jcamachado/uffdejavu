@@ -73,6 +73,11 @@ struct GlobalUniforms
   mat4 projInverse;  // Camera inverse projection matrix
 };
 
+struct CamerasUniforms
+{
+  GlobalUniforms cams[2];
+};
+
 // Push constant structure for the raster
 struct PushConstantRaster
 {
@@ -93,6 +98,7 @@ struct PushConstantRay
   float lightIntensity;
   int   lightType;
   int   frame;
+  int   eyeIndex;
 };
 
 // Structure used for retrieving the primitive information in the closest hit

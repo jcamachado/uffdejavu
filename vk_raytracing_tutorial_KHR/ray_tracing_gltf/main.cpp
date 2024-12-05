@@ -94,6 +94,7 @@ int main(int argc, char** argv)
   // Setup camera
   CameraManip.setWindowSize(SAMPLE_WIDTH, SAMPLE_HEIGHT);
   CameraManip.setLookat(glm::vec3(0, 0, 15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+  CameraManip.setStereoLookat(glm::vec3(0, 0, 15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0), 5.5f);
 
   // Setup Vulkan
   if(!glfwVulkanSupported())

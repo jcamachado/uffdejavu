@@ -61,15 +61,38 @@ void HelloVulkan::setup(const VkInstance& instance, const VkDevice& device, cons
 void HelloVulkan::updateUniformBuffer(const VkCommandBuffer& cmdBuf)
 {
   // Prepare new UBO contents on host.
-  const float    aspectRatio = m_size.width / static_cast<float>(m_size.height);
-  GlobalUniforms hostUBO     = {};
-  const auto&    view        = CameraManip.getMatrix();
-  glm::mat4      proj        = glm::perspectiveRH_ZO(glm::radians(CameraManip.getFov()), aspectRatio, 0.1f, 1000.0f);
-  proj[1][1] *= -1;  // Inverting Y for Vulkan (not needed with perspectiveVK).
+  const float aspectRatio = m_size.width / static_cast<float>(m_size.height);
+  // GlobalUniforms hostUBO     = {};
+  CamerasUniforms hostUBO = {};
 
-  hostUBO.viewProj    = proj * view;
-  hostUBO.viewInverse = glm::inverse(view);
-  hostUBO.projInverse = glm::inverse(proj);
+
+  // Get stereo cameras from CameraManip
+  const auto& stereo = CameraManip.getStereoCameras();
+
+  // Left camera (index 0)
+  const auto& leftCam = stereo.left;
+
+
+  // Left camera (index 0)
+  // glm::mat4 viewL = glm::translate(CameraManip.getMatrix(), glm::vec3(-eyeSeparation / 2, 0, 0));
+  glm::mat4 viewL = glm::lookAt(leftCam.eye, leftCam.ctr, leftCam.up);
+  glm::mat4 projL = glm::perspectiveRH_ZO(glm::radians(leftCam.fov), aspectRatio, 0.1f, 1000.0f);
+  projL[1][1] *= -1;
+
+  hostUBO.cams[0].viewProj    = projL * viewL;
+  hostUBO.cams[0].viewInverse = glm::inverse(viewL);
+  hostUBO.cams[0].projInverse = glm::inverse(projL);
+
+  // Right camera (index 1)
+  // Right camera (index 1)
+  const auto& rightCam = stereo.right;
+  glm::mat4   viewR    = glm::lookAt(rightCam.eye, rightCam.ctr, rightCam.up);
+  glm::mat4   projR    = glm::perspectiveRH_ZO(glm::radians(rightCam.fov), aspectRatio, 0.1f, 1000.0f);
+  projR[1][1] *= -1;
+
+  hostUBO.cams[1].viewProj    = projR * viewR;
+  hostUBO.cams[1].viewInverse = glm::inverse(viewR);
+  hostUBO.cams[1].projInverse = glm::inverse(projR);
 
   // UBO on the device, and what stages access it.
   VkBuffer deviceUBO      = m_bGlobals.buffer;
@@ -556,7 +579,6 @@ void HelloVulkan::drawPost(VkCommandBuffer cmdBuf)
 {
   m_debug.beginLabel(cmdBuf, "Post");
 
-  // setViewport(cmdBuf);
   setViewportLE(cmdBuf);
 
   auto aspectRatio = static_cast<float>(m_size.width) / static_cast<float>(m_size.height);
@@ -843,25 +865,43 @@ void HelloVulkan::raytrace(const VkCommandBuffer& cmdBuf, const glm::vec4& clear
   updateFrame();
 
   m_debug.beginLabel(cmdBuf, "Ray trace");
-  // Initializing push constant values
-  m_pcRay.clearColor     = clearColor;
-  m_pcRay.lightPosition  = m_pcRaster.lightPosition;
-  m_pcRay.lightIntensity = m_pcRaster.lightIntensity;
-  m_pcRay.lightType      = m_pcRaster.lightType;
-
 
   std::vector<VkDescriptorSet> descSets{m_rtDescSet, m_descSet};
   vkCmdBindPipeline(cmdBuf, VK_PIPELINE_BIND_POINT_RAY_TRACING_KHR, m_rtPipeline);
   vkCmdBindDescriptorSets(cmdBuf, VK_PIPELINE_BIND_POINT_RAY_TRACING_KHR, m_rtPipelineLayout, 0,
                           (uint32_t)descSets.size(), descSets.data(), 0, nullptr);
+
+
+  auto& regions = m_sbtWrapper.getRegions();
+
+  // Left eye
+  m_debug.beginLabel(cmdBuf, "Left eye");
+  setViewportLE(cmdBuf);
+  // Initializing push constant values
+  m_pcRay.clearColor     = clearColor;
+  m_pcRay.lightPosition  = m_pcRaster.lightPosition;
+  m_pcRay.lightIntensity = m_pcRaster.lightIntensity;
+  m_pcRay.lightType      = m_pcRaster.lightType;
+  m_pcRay.eyeIndex       = 0;  // Left eye index
+
   vkCmdPushConstants(cmdBuf, m_rtPipelineLayout,
                      VK_SHADER_STAGE_RAYGEN_BIT_KHR | VK_SHADER_STAGE_CLOSEST_HIT_BIT_KHR | VK_SHADER_STAGE_MISS_BIT_KHR,
                      0, sizeof(PushConstantRay), &m_pcRay);
 
-
-  auto& regions = m_sbtWrapper.getRegions();
   vkCmdTraceRaysKHR(cmdBuf, &regions[0], &regions[1], &regions[2], &regions[3], m_size.width, m_size.height, 1);
+  m_debug.endLabel(cmdBuf);
 
+  // Right eye
+  m_debug.beginLabel(cmdBuf, "Right eye");
+  setViewportRE(cmdBuf);
+  m_pcRay.eyeIndex = 1;  // Right eye index
+
+  vkCmdPushConstants(cmdBuf, m_rtPipelineLayout,
+                     VK_SHADER_STAGE_RAYGEN_BIT_KHR | VK_SHADER_STAGE_CLOSEST_HIT_BIT_KHR | VK_SHADER_STAGE_MISS_BIT_KHR,
+                     0, sizeof(PushConstantRay), &m_pcRay);
+
+  vkCmdTraceRaysKHR(cmdBuf, &regions[0], &regions[1], &regions[2], &regions[3], m_size.width, m_size.height, 1);
+  m_debug.endLabel(cmdBuf);
 
   m_debug.endLabel(cmdBuf);
 }

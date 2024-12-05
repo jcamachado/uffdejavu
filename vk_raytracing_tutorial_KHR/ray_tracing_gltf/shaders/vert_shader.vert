@@ -26,10 +26,13 @@
 #include "gltf.glsl"
 #include "host_device.h"
 
-layout(binding = 0) uniform _GlobalUniforms
-{
-  GlobalUniforms uni;
-};
+// layout(binding = 0) uniform _GlobalUniforms
+// {
+//   GlobalUniforms uni;
+// };
+layout(binding = 0) uniform _GlobalUniforms {
+  GlobalUniforms cams[2];  // Array of cameras
+} uni;
 
 layout(push_constant) uniform _PushConstantRaster
 {
@@ -54,12 +57,12 @@ out gl_PerVertex
 
 void main()
 {
-  vec3 origin = vec3(uni.viewInverse * vec4(0, 0, 0, 1));
+  vec3 origin = vec3(uni.cams[gl_InstanceIndex].viewInverse * vec4(0, 0, 0, 1));
 
   o_worldPos = vec3(pcRaster.modelMatrix * vec4(i_position, 1.0));
   o_viewDir  = vec3(o_worldPos - origin);
   o_texCoord = i_texCoord;
   o_worldNrm = mat3(pcRaster.modelMatrix) * i_normal;
 
-  gl_Position = uni.viewProj * vec4(o_worldPos, 1.0);
+  gl_Position = uni.cams[gl_InstanceIndex].viewProj * vec4(o_worldPos, 1.0);
 }
