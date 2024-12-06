@@ -104,7 +104,7 @@ public:
                          float           fov_   = 50.0,
                          float           near_  = 0.01f,
                          float           far_   = 10.0)
-      : m_cameras{(eye, focus, object), (eye, focus, object)}
+      : m_camera(eye, focus, object)
   {
     m_renderCnt          = 1;
     m_bCameraMode        = true;
@@ -135,17 +135,16 @@ public:
   bool  m_bNewTiming;
   bool  m_bAdjustTimeScale;
 
-  int                        m_renderCnt;
-  TimeSampler                m_realtime;
-  bool                       m_timingGlitch;
-  std::vector<InertiaCamera> m_cameras = {InertiaCamera(), InertiaCamera()};
-
-  glm::mat4 m_projection;
-  float     m_fov, m_near, m_far;
+  int           m_renderCnt;
+  TimeSampler   m_realtime;
+  bool          m_timingGlitch;
+  InertiaCamera m_camera;
+  glm::mat4     m_projection;
+  float         m_fov, m_near, m_far;
 
 public:
   inline glm::mat4& projMat() { return m_projection; }
-  inline glm::mat4& viewMat(uint8_t index) { return m_cameras[index].m4_view; }
+  inline glm::mat4& viewMat() { return m_camera.m4_view; }
   inline bool&      nonStopRendering() { return m_realtime.bNonStopRendering; }
 
   bool open(int posX, int posY, int width, int height, const char* title, bool requireGLContext) override;
@@ -208,46 +207,31 @@ void AppWindowCameraInertia::onMouseMotion(int x, int y)
   //---------------------------- LEFT
   if(m_bMousing)
   {
-    float hval       = 2.0f * (float)(m_ptCurrentMousePosit.x - m_ptLastMousePosit.x) / (float)getWidth();
-    float vval       = 2.0f * (float)(m_ptCurrentMousePosit.y - m_ptLastMousePosit.y) / (float)getHeight();
-    m_cameras[0].tau = CAMERATAU;
-    m_cameras[0].rotateH(hval);
-    m_cameras[0].rotateV(vval);
-
-    m_cameras[1].tau = CAMERATAU;
-    m_cameras[1].rotateH(hval);
-    m_cameras[1].rotateV(vval);
-
+    float hval   = 2.0f * (float)(m_ptCurrentMousePosit.x - m_ptLastMousePosit.x) / (float)getWidth();
+    float vval   = 2.0f * (float)(m_ptCurrentMousePosit.y - m_ptLastMousePosit.y) / (float)getHeight();
+    m_camera.tau = CAMERATAU;
+    m_camera.rotateH(hval);
+    m_camera.rotateV(vval);
     m_renderCnt++;
   }
   //---------------------------- MIDDLE
   if(m_bMMousing)
   {
-    float hval       = 2.0f * (float)(m_ptCurrentMousePosit.x - m_ptLastMousePosit.x) / (float)getWidth();
-    float vval       = 2.0f * (float)(m_ptCurrentMousePosit.y - m_ptLastMousePosit.y) / (float)getHeight();
-    m_cameras[0].tau = CAMERATAU;
-    m_cameras[0].rotateH(hval, true);
-    m_cameras[0].rotateV(vval, true);
-
-    m_cameras[1].tau = CAMERATAU;
-    m_cameras[1].rotateH(hval, true);
-    m_cameras[1].rotateV(vval, true);
-
+    float hval   = 2.0f * (float)(m_ptCurrentMousePosit.x - m_ptLastMousePosit.x) / (float)getWidth();
+    float vval   = 2.0f * (float)(m_ptCurrentMousePosit.y - m_ptLastMousePosit.y) / (float)getHeight();
+    m_camera.tau = CAMERATAU;
+    m_camera.rotateH(hval, true);
+    m_camera.rotateV(vval, true);
     m_renderCnt++;
   }
   //---------------------------- RIGHT
   if(m_bRMousing)
   {
-    float hval       = 2.0f * (float)(m_ptCurrentMousePosit.x - m_ptLastMousePosit.x) / (float)getWidth();
-    float vval       = -2.0f * (float)(m_ptCurrentMousePosit.y - m_ptLastMousePosit.y) / (float)getHeight();
-    m_cameras[0].tau = CAMERATAU;
-    m_cameras[0].rotateH(hval, !!(getKeyModifiers() & KMOD_CONTROL));
-    m_cameras[0].move(vval, !!(getKeyModifiers() & KMOD_CONTROL));
-
-    m_cameras[1].tau = CAMERATAU;
-    m_cameras[1].rotateH(hval, !!(getKeyModifiers() & KMOD_CONTROL));
-    m_cameras[1].move(vval, !!(getKeyModifiers() & KMOD_CONTROL));
-
+    float hval   = 2.0f * (float)(m_ptCurrentMousePosit.x - m_ptLastMousePosit.x) / (float)getWidth();
+    float vval   = -2.0f * (float)(m_ptCurrentMousePosit.y - m_ptLastMousePosit.y) / (float)getHeight();
+    m_camera.tau = CAMERATAU;
+    m_camera.rotateH(hval, !!(getKeyModifiers() & KMOD_CONTROL));
+    m_camera.move(vval, !!(getKeyModifiers() & KMOD_CONTROL));
     m_renderCnt++;
   }
 
@@ -262,11 +246,8 @@ void AppWindowCameraInertia::onMouseWheel(int delta)
 {
   if(ImGuiH::mouse_wheel(delta))
     return;
-  m_cameras[0].tau = KEYTAU;
-  m_cameras[0].move(delta > 0 ? m_moveStep : -m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
-
-  m_cameras[1].tau = KEYTAU;
-  m_cameras[1].move(delta > 0 ? m_moveStep : -m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
+  m_camera.tau = KEYTAU;
+  m_camera.move(delta > 0 ? m_moveStep : -m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
   m_renderCnt++;
 }
 //------------------------------------------------------------------------------
@@ -360,46 +341,28 @@ void AppWindowCameraInertia::onKeyboard(NVPWindow::KeyCode key, NVPWindow::Butto
     case NVPWindow::KEY_F12:
       break;
     case NVPWindow::KEY_LEFT:
-      m_cameras[0].tau = KEYTAU;
-      m_cameras[0].rotateH(m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
-
-      m_cameras[1].tau = KEYTAU;
-      m_cameras[1].rotateH(m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
+      m_camera.tau = KEYTAU;
+      m_camera.rotateH(m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
       break;
     case NVPWindow::KEY_UP:
-      m_cameras[0].tau = KEYTAU;
-      m_cameras[0].rotateV(m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
-
-      m_cameras[1].tau = KEYTAU;
-      m_cameras[1].rotateV(m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
+      m_camera.tau = KEYTAU;
+      m_camera.rotateV(m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
       break;
     case NVPWindow::KEY_RIGHT:
-      m_cameras[0].tau = KEYTAU;
-      m_cameras[0].rotateH(-m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
-
-      m_cameras[1].tau = KEYTAU;
-      m_cameras[1].rotateH(-m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
+      m_camera.tau = KEYTAU;
+      m_camera.rotateH(-m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
       break;
     case NVPWindow::KEY_DOWN:
-      m_cameras[0].tau = KEYTAU;
-      m_cameras[0].rotateV(-m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
-
-      m_cameras[1].tau = KEYTAU;
-      m_cameras[1].rotateV(-m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
+      m_camera.tau = KEYTAU;
+      m_camera.rotateV(-m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
       break;
     case NVPWindow::KEY_PAGE_UP:
-      m_cameras[0].tau = KEYTAU;
-      m_cameras[0].move(m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
-
-      m_cameras[1].tau = KEYTAU;
-      m_cameras[1].move(m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
+      m_camera.tau = KEYTAU;
+      m_camera.move(m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
       break;
     case NVPWindow::KEY_PAGE_DOWN:
-      m_cameras[0].tau = KEYTAU;
-      m_cameras[0].move(-m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
-
-      m_cameras[1].tau = KEYTAU;
-      m_cameras[1].move(-m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
+      m_camera.tau = KEYTAU;
+      m_camera.move(-m_moveStep, !!(getKeyModifiers() & KMOD_CONTROL));
       break;
     case NVPWindow::KEY_ESCAPE:
       close();
@@ -431,7 +394,7 @@ int AppWindowCameraInertia::idle()
   //
   // Camera motion
   //
-  m_bContinue = m_cameras[0].update((float)m_realtime.getFrameDT()) && m_cameras[1].update((float)m_realtime.getFrameDT());
+  m_bContinue = m_camera.update((float)m_realtime.getFrameDT());
   //
   // time sampling
   //
