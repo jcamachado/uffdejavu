@@ -68,9 +68,9 @@ struct SceneDesc
 // Uniform buffer set at each frame
 struct GlobalUniforms
 {
-  mat4 viewProj;     // Camera view * projection
-  mat4 viewInverse;  // Camera inverse view matrix
-  mat4 projInverse;  // Camera inverse projection matrix
+  mat4 viewProj[2];     // Camera view * projection
+  mat4 viewInverse[2];  // Camera inverse view matrix
+  mat4 projInverse[2];  // Camera inverse projection matrix
 };
 
 // Push constant structure for the raster

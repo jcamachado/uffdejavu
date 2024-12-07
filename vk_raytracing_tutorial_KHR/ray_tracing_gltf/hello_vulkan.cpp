@@ -63,13 +63,21 @@ void HelloVulkan::updateUniformBuffer(const VkCommandBuffer& cmdBuf)
   // Prepare new UBO contents on host.
   const float    aspectRatio = m_size.width / static_cast<float>(m_size.height);
   GlobalUniforms hostUBO     = {};
-  const auto&    view        = CameraManip.getMatrix();
-  glm::mat4      proj        = glm::perspectiveRH_ZO(glm::radians(CameraManip.getFov()), aspectRatio, 0.1f, 1000.0f);
+
+  float       eyeSeparation = 2.08f;
+  const auto& viewL         = glm::translate(CameraManip.getMatrix(), glm::vec3(-eyeSeparation / 2, 0, 0));
+  glm::mat4   proj          = glm::perspectiveRH_ZO(glm::radians(CameraManip.getFov()), aspectRatio, 0.1f, 1000.0f);
   proj[1][1] *= -1;  // Inverting Y for Vulkan (not needed with perspectiveVK).
 
-  hostUBO.viewProj    = proj * view;
-  hostUBO.viewInverse = glm::inverse(view);
-  hostUBO.projInverse = glm::inverse(proj);
+  hostUBO.viewProj[0]    = proj * viewL;
+  hostUBO.viewInverse[0] = glm::inverse(viewL);
+  hostUBO.projInverse[0] = glm::inverse(proj);
+
+  const auto& viewR      = glm::translate(CameraManip.getMatrix(), glm::vec3(eyeSeparation / 2, 0, 0));
+  hostUBO.viewProj[1]    = proj * viewR;
+  hostUBO.viewInverse[1] = glm::inverse(viewR);
+  hostUBO.projInverse[1] = glm::inverse(proj);
+
 
   // UBO on the device, and what stages access it.
   VkBuffer deviceUBO      = m_bGlobals.buffer;
