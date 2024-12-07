@@ -124,6 +124,7 @@ int main(int argc, char** argv)
     contextInfo.addInstanceExtension(reqExtensions[ext_id]);
   contextInfo.addInstanceExtension(VK_EXT_DEBUG_UTILS_EXTENSION_NAME, true);  // Allow debug names
   contextInfo.addDeviceExtension(VK_KHR_SWAPCHAIN_EXTENSION_NAME);            // Enabling ability to present rendering
+  contextInfo.addDeviceExtension(VK_KHR_MULTIVIEW_EXTENSION_NAME);            // To render to multiple views
 
   // #VKRay: Activate the ray tracing extension
   VkPhysicalDeviceAccelerationStructureFeaturesKHR accelFeature{VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_FEATURES_KHR};
