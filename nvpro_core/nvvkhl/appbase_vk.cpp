@@ -44,6 +44,13 @@ void nvvkhl::AppBaseVk::create(const AppBaseVkCreateInfo& info)
   initGUI();
   setupGlfwCallbacks(info.window);
   ImGui_ImplGlfw_InitForVulkan(info.window, true);
+
+  // Multiview setup
+  createMultiviewColorAttachment();
+  createMultiviewDepthAttachment();
+  createMultiviewImageViews();
+  createMultiviewRenderPass();
+  createMultiviewFramebuffer();
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -90,6 +97,16 @@ void nvvkhl::AppBaseVk::destroy()
   vkDestroyImageView(m_device, m_depthView, nullptr);
   vkDestroyImage(m_device, m_depthImage, nullptr);
   vkFreeMemory(m_device, m_depthMemory, nullptr);
+
+  vkDestroyImageView(m_device, m_multiviewColorView, nullptr);
+  vkDestroyImage(m_device, m_multiviewColorImage, nullptr);
+  vkFreeMemory(m_device, m_multiviewColorMemory, nullptr);
+
+  vkDestroyImageView(m_device, m_multiviewDepthView, nullptr);
+  vkDestroyImage(m_device, m_multiviewDepthImage, nullptr);
+  vkFreeMemory(m_device, m_multiviewDepthMemory, nullptr);
+
+
   vkDestroyPipelineCache(m_device, m_pipelineCache, nullptr);
 
   for(uint32_t i = 0; i < m_swapChain.getImageCount(); i++)
@@ -392,7 +409,187 @@ void nvvkhl::AppBaseVk::createDepthBuffer()
   vkCreateImageView(m_device, &depthStencilView, nullptr, &m_depthView);
 }
 
+void nvvkhl::AppBaseVk::createMultiviewImageViews()
+{
+  const uint32_t multiviewLayerCount = 2;
 
+  // Create depth image view
+  VkImageViewCreateInfo depthStencilView       = {};
+  depthStencilView.sType                       = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+  depthStencilView.viewType                    = VK_IMAGE_VIEW_TYPE_2D_ARRAY;
+  depthStencilView.format                      = m_depthFormat;
+  depthStencilView.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
+  if(m_depthFormat >= VK_FORMAT_D16_UNORM_S8_UINT)
+  {
+    depthStencilView.subresourceRange.aspectMask |= VK_IMAGE_ASPECT_STENCIL_BIT;
+  }
+  depthStencilView.subresourceRange.baseMipLevel   = 0;
+  depthStencilView.subresourceRange.levelCount     = 1;
+  depthStencilView.subresourceRange.baseArrayLayer = 0;
+  depthStencilView.subresourceRange.layerCount     = multiviewLayerCount;
+  depthStencilView.image                           = m_depthImage;
+  vkCreateImageView(m_device, &depthStencilView, nullptr, &m_multiviewDepthView);
+
+  // Create color image view
+  VkImageViewCreateInfo imageViewCI           = {};
+  imageViewCI.sType                           = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+  imageViewCI.viewType                        = VK_IMAGE_VIEW_TYPE_2D_ARRAY;
+  imageViewCI.format                          = m_colorFormat;
+  imageViewCI.subresourceRange.aspectMask     = VK_IMAGE_ASPECT_COLOR_BIT;
+  imageViewCI.subresourceRange.baseMipLevel   = 0;
+  imageViewCI.subresourceRange.levelCount     = 1;
+  imageViewCI.subresourceRange.baseArrayLayer = 0;
+  imageViewCI.subresourceRange.layerCount     = multiviewLayerCount;
+  imageViewCI.image                           = m_multiviewColorImage;
+  vkCreateImageView(m_device, &imageViewCI, nullptr, &m_multiviewColorView);
+}
+
+void nvvkhl::AppBaseVk::createMultiviewColorAttachment()
+{
+  const uint32_t multiviewLayerCount = 2;
+
+  VkImageCreateInfo imageCI = {};
+  imageCI.sType             = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
+  imageCI.imageType         = VK_IMAGE_TYPE_2D;
+  imageCI.format            = m_colorFormat;
+  imageCI.extent            = {m_size.width, m_size.height, 1};
+  imageCI.mipLevels         = 1;
+  imageCI.arrayLayers       = multiviewLayerCount;
+  imageCI.samples           = VK_SAMPLE_COUNT_1_BIT;
+  imageCI.tiling            = VK_IMAGE_TILING_OPTIMAL;
+  imageCI.usage             = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
+  vkCreateImage(m_device, &imageCI, nullptr, &m_multiviewColorImage);
+
+  VkMemoryRequirements memReqs;
+  vkGetImageMemoryRequirements(m_device, m_multiviewColorImage, &memReqs);
+
+  VkMemoryAllocateInfo memAllocInfo = {};
+  memAllocInfo.sType                = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+  memAllocInfo.allocationSize       = memReqs.size;
+  memAllocInfo.memoryTypeIndex      = getMemoryType(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+  vkAllocateMemory(m_device, &memAllocInfo, nullptr, &m_multiviewColorMemory);
+  vkBindImageMemory(m_device, m_multiviewColorImage, m_multiviewColorMemory, 0);
+}
+
+void nvvkhl::AppBaseVk::createMultiviewDepthAttachment()
+{
+  const uint32_t multiviewLayerCount = 2;
+
+  VkImageCreateInfo imageCI = {};
+  imageCI.sType             = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
+  imageCI.imageType         = VK_IMAGE_TYPE_2D;
+  imageCI.format            = m_depthFormat;
+  imageCI.extent            = {m_size.width, m_size.height, 1};
+  imageCI.mipLevels         = 1;
+  imageCI.arrayLayers       = multiviewLayerCount;
+  imageCI.samples           = VK_SAMPLE_COUNT_1_BIT;
+  imageCI.tiling            = VK_IMAGE_TILING_OPTIMAL;
+  imageCI.usage             = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
+  vkCreateImage(m_device, &imageCI, nullptr, &m_multiviewDepthImage);
+
+  VkMemoryRequirements memReqs;
+  vkGetImageMemoryRequirements(m_device, m_multiviewDepthImage, &memReqs);
+
+  VkMemoryAllocateInfo memAllocInfo = {};
+  memAllocInfo.sType                = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+  memAllocInfo.allocationSize       = memReqs.size;
+  memAllocInfo.memoryTypeIndex      = getMemoryType(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+  vkAllocateMemory(m_device, &memAllocInfo, nullptr, &m_multiviewDepthMemory);
+  vkBindImageMemory(m_device, m_multiviewDepthImage, m_multiviewDepthMemory, 0);
+}
+
+void nvvkhl::AppBaseVk::createMultiviewRenderPass()
+{
+  std::array<VkAttachmentDescription, 2> attachments = {};
+  attachments[0].format                              = m_colorFormat;
+  attachments[0].samples                             = VK_SAMPLE_COUNT_1_BIT;
+  attachments[0].loadOp                              = VK_ATTACHMENT_LOAD_OP_CLEAR;
+  attachments[0].storeOp                             = VK_ATTACHMENT_STORE_OP_STORE;
+  attachments[0].stencilLoadOp                       = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+  attachments[0].stencilStoreOp                      = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+  attachments[0].initialLayout                       = VK_IMAGE_LAYOUT_UNDEFINED;
+  attachments[0].finalLayout                         = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+
+  attachments[1].format         = m_depthFormat;
+  attachments[1].samples        = VK_SAMPLE_COUNT_1_BIT;
+  attachments[1].loadOp         = VK_ATTACHMENT_LOAD_OP_CLEAR;
+  attachments[1].storeOp        = VK_ATTACHMENT_STORE_OP_STORE;
+  attachments[1].stencilLoadOp  = VK_ATTACHMENT_LOAD_OP_CLEAR;
+  attachments[1].stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+  attachments[1].initialLayout  = VK_IMAGE_LAYOUT_UNDEFINED;
+  attachments[1].finalLayout    = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+
+  VkAttachmentReference colorReference = {};
+  colorReference.attachment            = 0;
+  colorReference.layout                = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+
+  VkAttachmentReference depthReference = {};
+  depthReference.attachment            = 1;
+  depthReference.layout                = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+
+  VkSubpassDescription subpassDescription    = {};
+  subpassDescription.pipelineBindPoint       = VK_PIPELINE_BIND_POINT_GRAPHICS;
+  subpassDescription.colorAttachmentCount    = 1;
+  subpassDescription.pColorAttachments       = &colorReference;
+  subpassDescription.pDepthStencilAttachment = &depthReference;
+
+  std::array<VkSubpassDependency, 2> dependencies = {};
+  dependencies[0].srcSubpass                      = VK_SUBPASS_EXTERNAL;
+  dependencies[0].dstSubpass                      = 0;
+  dependencies[0].srcStageMask                    = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
+  dependencies[0].dstStageMask                    = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+  dependencies[0].srcAccessMask                   = VK_ACCESS_MEMORY_READ_BIT;
+  dependencies[0].dstAccessMask   = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+  dependencies[0].dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
+
+  dependencies[1].srcSubpass      = 0;
+  dependencies[1].dstSubpass      = VK_SUBPASS_EXTERNAL;
+  dependencies[1].srcStageMask    = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+  dependencies[1].dstStageMask    = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
+  dependencies[1].srcAccessMask   = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+  dependencies[1].dstAccessMask   = VK_ACCESS_MEMORY_READ_BIT;
+  dependencies[1].dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
+
+  VkRenderPassCreateInfo renderPassCI = {};
+  renderPassCI.sType                  = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
+  renderPassCI.attachmentCount        = static_cast<uint32_t>(attachments.size());
+  renderPassCI.pAttachments           = attachments.data();
+  renderPassCI.subpassCount           = 1;
+  renderPassCI.pSubpasses             = &subpassDescription;
+  renderPassCI.dependencyCount        = static_cast<uint32_t>(dependencies.size());
+  renderPassCI.pDependencies          = dependencies.data();
+
+  const uint32_t viewMask        = 0b00000011;
+  const uint32_t correlationMask = 0b00000011;
+
+  VkRenderPassMultiviewCreateInfo renderPassMultiviewCI = {};
+  renderPassMultiviewCI.sType                           = VK_STRUCTURE_TYPE_RENDER_PASS_MULTIVIEW_CREATE_INFO;
+  renderPassMultiviewCI.subpassCount                    = 1;
+  renderPassMultiviewCI.pViewMasks                      = &viewMask;
+  renderPassMultiviewCI.correlationMaskCount            = 1;
+  renderPassMultiviewCI.pCorrelationMasks               = &correlationMask;
+
+  renderPassCI.pNext = &renderPassMultiviewCI;
+
+  vkCreateRenderPass(m_device, &renderPassCI, nullptr, &m_multiviewRenderPass);
+}
+
+void nvvkhl::AppBaseVk::createMultiviewFramebuffer()
+{
+  VkImageView attachments[2];
+  attachments[0] = m_multiviewColorView;
+  attachments[1] = m_multiviewDepthView;
+
+  VkFramebufferCreateInfo framebufferCI = {};
+  framebufferCI.sType                   = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+  framebufferCI.renderPass              = m_multiviewRenderPass;
+  framebufferCI.attachmentCount         = 2;
+  framebufferCI.pAttachments            = attachments;
+  framebufferCI.width                   = m_size.width;
+  framebufferCI.height                  = m_size.height;
+  framebufferCI.layers                  = 1;
+  vkCreateFramebuffer(m_device, &framebufferCI, nullptr, &m_multiviewFramebuffer);
+}
 //--------------------------------------------------------------------------------------------------
 // Convenient function to call before rendering.
 // - Waits for a framebuffer to be available

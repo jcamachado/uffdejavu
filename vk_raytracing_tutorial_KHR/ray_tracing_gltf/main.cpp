@@ -122,9 +122,15 @@ int main(int argc, char** argv)
   contextInfo.setVersion(1, 2);                       // Using Vulkan 1.2
   for(uint32_t ext_id = 0; ext_id < count; ext_id++)  // Adding required extensions (surface, win32, linux, ..)
     contextInfo.addInstanceExtension(reqExtensions[ext_id]);
-  contextInfo.addInstanceExtension(VK_EXT_DEBUG_UTILS_EXTENSION_NAME, true);  // Allow debug names
-  contextInfo.addDeviceExtension(VK_KHR_SWAPCHAIN_EXTENSION_NAME);            // Enabling ability to present rendering
-  contextInfo.addDeviceExtension(VK_KHR_MULTIVIEW_EXTENSION_NAME);            // To render to multiple views
+  contextInfo.addInstanceExtension(VK_EXT_DEBUG_UTILS_EXTENSION_NAME, true);                       // Allow debug names
+  contextInfo.addInstanceExtension(VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME, true);  // For acceleration structure
+  contextInfo.addDeviceExtension(VK_KHR_SWAPCHAIN_EXTENSION_NAME);  // Enabling ability to present rendering
+  contextInfo.addDeviceExtension(VK_KHR_MULTIVIEW_EXTENSION_NAME);  // To render to multiple views
+
+  VkPhysicalDeviceMultiviewFeaturesKHR physicalDeviceMultiviewFeatures{};
+  physicalDeviceMultiviewFeatures.sType     = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_FEATURES_KHR;
+  physicalDeviceMultiviewFeatures.multiview = VK_TRUE;
+  contextInfo.addDeviceExtension(VK_KHR_MULTIVIEW_EXTENSION_NAME, false, &physicalDeviceMultiviewFeatures);
 
   // #VKRay: Activate the ray tracing extension
   VkPhysicalDeviceAccelerationStructureFeaturesKHR accelFeature{VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_FEATURES_KHR};

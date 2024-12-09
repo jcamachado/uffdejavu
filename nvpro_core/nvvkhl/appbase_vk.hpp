@@ -276,6 +276,14 @@ public:
   virtual void createFrameBuffers();
   virtual void createRenderPass();
   virtual void createDepthBuffer();
+  // multiview
+  virtual void createMultiviewFramebuffer();
+  virtual void createMultiviewRenderPass();
+  virtual void createMultiviewImageViews();
+  virtual void createMultiviewColorAttachment();
+  virtual void createMultiviewDepthAttachment();
+
+
   virtual void prepareFrame();
   virtual void submitFrame();
   virtual void updateInputs() {};
@@ -342,6 +350,24 @@ protected:
   uint32_t         m_graphicsQueueIndex{VK_QUEUE_FAMILY_IGNORED};
   VkCommandPool    m_cmdPool{VK_NULL_HANDLE};
   VkDescriptorPool m_imguiDescPool{VK_NULL_HANDLE};
+
+  // m_multiviewDepthView
+  VkImageView m_multiviewDepthView{VK_NULL_HANDLE};
+  //m_multiviewColorView
+  VkImageView m_multiviewColorView{VK_NULL_HANDLE};
+  //m_colorImage
+  VkImage m_multiviewColorImage{VK_NULL_HANDLE};
+  // m_multiviewDepthImage
+  VkImage m_multiviewDepthImage{VK_NULL_HANDLE};
+  //m_multiviewColorMemory
+  VkDeviceMemory m_multiviewColorMemory{VK_NULL_HANDLE};
+  //m_multiviewRenderPass
+  VkRenderPass m_multiviewRenderPass{VK_NULL_HANDLE};
+  //m_multiviewFramebuffer
+  VkFramebuffer m_multiviewFramebuffer{VK_NULL_HANDLE};
+  //m_multiviewDepthMemory
+  VkDeviceMemory m_multiviewDepthMemory{VK_NULL_HANDLE};
+
 
   // Drawing/Surface
   nvvk::SwapChain              m_swapChain;

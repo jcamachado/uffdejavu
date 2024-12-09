@@ -504,7 +504,7 @@ bool Context::initDevice(uint32_t deviceIndex, const ContextCreateInfo& info)
   features2.features = m_physicalInfo.features10;
   features11old.read(m_physicalInfo.features11);
 
-  if(info.apiMajor == 1 && info.apiMinor == 1)
+  if(info.apiMajor == 1 && info.apiMinor >= 1)
   {
     features2.pNext = &features11old.multiview;
   }

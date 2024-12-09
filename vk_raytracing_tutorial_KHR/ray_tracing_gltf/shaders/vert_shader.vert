@@ -22,7 +22,7 @@
 #extension GL_EXT_scalar_block_layout : enable
 #extension GL_GOOGLE_include_directive : enable
 #extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
-#extension GL_EXT_multiview : enable
+#extension GL_EXT_multiview : require
 
 #include "gltf.glsl"
 #include "host_device.h"
